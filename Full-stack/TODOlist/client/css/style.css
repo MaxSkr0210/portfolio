@@ -1,0 +1,74 @@
+[v-cloak] {
+    display: none;
+}
+
+.mr {
+    margin-right: 50px;
+}
+
+.card {
+    margin-bottom: 15px;
+}
+
+.loader {
+    position: relative;
+    top: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner-border {
+    width: 4rem;
+    height: 4rem;
+    border-width: .35rem
+}
+
+@media (max-width: 767px) {
+    .form-group:first-child {
+        margin-bottom: 10px;
+    }
+    #text {
+        margin-left: 24px;
+    }
+    form button {
+        position: relative;
+        bottom: 23px;
+    }
+}
+
+@media (max-width: 575px) {
+    .form-group:first-child {
+        margin-bottom: 1rem;
+    }
+    #text {
+        margin-left: 0;
+    }
+    form button {
+        position: relative;
+        bottom: 0;
+    }
+}
+
+@media (max-width: 525px) {
+    .form-group:first-child {
+        margin-bottom: 1rem;
+    }
+    #text {
+        margin-left: 0;
+    }
+    form button {
+        position: relative;
+        bottom: 33px;
+    }
+    h1 {
+        text-align: center;
+    }
+}
+
+@media (max-width: 351px) {
+    form button {
+        position: relative;
+        bottom: 0;
+    }
+}
