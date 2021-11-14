@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Timers</title>
+    <link rel="icon" type="image/png" href="/clock.png">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/css/uikit.min.css" />
+
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+      .mono {
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    [% if user %]
+      <section id="app" v-cloak class="uk-container uk-margin-top uk-margin-bottom">
+        <p>
+          <strong>
+            User: [[ user.username ]].
+            <a href="/logout">Log out</a>
+          </strong>
+        </p>
+        <p>
+          <form v-on:submit.prevent="createTimer">
+            <input v-model="desc" class="uk-input" placeholder="Type description...">
+            <p>
+              <button v-bind:disabled="!desc" id="start-timer" class="uk-button uk-button-primary">
+                <span uk-icon="play"></span> Start timer
+              </button>
+            </p>
+          </form>
+        </p>
+        <div>
+          <h2>Active timers:</h2>
+          <ul class="uk-list">
+            <li v-for="t in activeTimers" :key="t._id">
+              <span uk-icon="close" v-on:click="stopTimer(t._id)"></span>
+              <span class="uk-text-primary mono">{{ formatDuration(t.progress) }}</span>
+              <strong class="uk-text-emphasis">{{ t.description }}</strong>
+              <span class="uk-text-muted mono">{{ formatTime(t.start) }}</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h2>Old timers:</h2>
+          <ul id="past-timers" class="uk-list">
+            <li v-for="t in oldTimers" :key="t._id">
+              <span class="uk-text-primary mono">{{ formatDuration(t.duration) }}</span>
+              <strong class="uk-text-emphasis">{{ t.description }}</strong>
+              (<span class="uk-text-muted mono">{{ formatTime(t.start) }}</span>
+              &ndash;
+              <span class="uk-text-muted mono">{{ formatTime(t.end) }}</span>)
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit-icons.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+      <script src="/main.js"></script>
+    [% else %]
+      <section class="uk-container uk-margin-top uk-margin-bottom">
+        [% if authError %]
+          <div class="uk-alert uk-alert-danger">
+            <p>[[ authError ]]</p>
+          </div>
+        [% endif %]
+
+        <h2>Login</h2>
+        <form method="POST" action="/login" enctype="application/x-www-form-urlencoded">
+          <p><input type="text" name="username" class="uk-input"></p>
+          <p><input type="password" name="password" class="uk-input"></p>
+          <p><button class="uk-button uk-button-primary">Login</button></p>
+        </form>
+
+        <h1>OR</h1>
+        <h2>Signup</h2>
+        <form method="POST" action="/signup" enctype="application/x-www-form-urlencoded">
+          <p><input type="text" name="username" class="uk-input"></p>
+          <p><input type="password" name="password" class="uk-input"></p>
+          <p><button class="uk-button uk-button-primary">Signup</button></p>
+        </form>
+      </section>
+    [% endif %]
+  </body>
+</html>
